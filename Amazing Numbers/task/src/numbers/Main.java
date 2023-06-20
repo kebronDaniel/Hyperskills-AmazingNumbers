@@ -1,37 +1,69 @@
 package numbers;
 
+import org.w3c.dom.Attr;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner  = new Scanner(System.in);
-        System.out.println("Enter a natural number:");
 
-        String numberInput = scanner.nextLine();
-        int number = Integer.parseInt(numberInput);
+        System.out.println("Welcome to Amazing Numbers!");
+        System.out.println();
+        System.out.println("Supported requests:");
+        System.out.println("- enter a natural number to know its properties;");
+        System.out.println("- enter 0 to exit.");
+        System.out.println();
 
-        if (checkNaturalNumber(number)){
-            System.out.println("Properties of " + number);
-            boolean even = numberIsEven(number);
-            System.out.println("        even:   " + even);
-            System.out.println("        odd:   " + !even);
+        while (true){
+            System.out.print("Enter a request: > ");
 
-            boolean buzz = checkBuzz(number);
-            System.out.println("        buzz:   "+buzz);
+            String numberInput = scanner.nextLine();
+            long number = Long.parseLong(numberInput);
 
-            boolean duck = checkDuck(numberInput);
-            System.out.println("        duck:   " + duck);
-        } else {
-            System.out.println("This number is not natural!");
+            if (number == 0){
+                System.out.println("Goodbye!");
+                break;
+            }
+
+            if (checkNaturalNumber(number)){
+                System.out.println();
+                System.out.println("Properties of " + number);
+                boolean even = numberIsEven(number);
+                System.out.println("        even:   " + even);
+                System.out.println("         odd:   " + !even);
+
+                boolean buzz = checkBuzz(number);
+                System.out.println("        buzz:   "+buzz);
+
+                boolean duck = checkDuck(numberInput);
+                System.out.println("        duck:   " + duck);
+
+                boolean palindromic = checkPalindromic(numberInput);
+                System.out.println(" palindromic:   " + palindromic);
+                System.out.println();
+
+            } else {
+                System.out.println();
+                System.out.println("The first parameter should be a natural number or zero.");
+                System.out.println();
+            }
         }
+
     }
 
 
-    public static boolean checkNaturalNumber(int number){
+    public static boolean checkNaturalNumber(long number){
         return (number <= 0) ? false : true;
     }
-    public static boolean numberIsEven(int number){
+    public static boolean numberIsEven(long number){
         return number % 2 == 0 ? true:false;
+    }
+
+    public static boolean checkPalindromic(String number){
+        StringBuilder stringBuilder = new StringBuilder(number);
+        String reversedNumber = stringBuilder.reverse().toString();
+        return (number.equals(reversedNumber)) ? true : false;
     }
 
     public static boolean checkDuck(String number){
@@ -45,11 +77,11 @@ public class Main {
         return false;
     }
 
-    public static boolean checkBuzz(int number){
+    public static boolean checkBuzz(long number){
 
-        int lastDigit = number % 10;
-        int remainingDigits = number / 10;
-        int checker = ((remainingDigits - (lastDigit*2)) % 7);
+        long lastDigit = number % 10;
+        long remainingDigits = number / 10;
+        long checker = ((remainingDigits - (lastDigit*2)) % 7);
 
         if ((checker == 0) && (lastDigit == 7)){
 //            System.out.println("It is a Buzz number.");
